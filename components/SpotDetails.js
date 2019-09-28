@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Modal, TextInput, View, TouchableHighlight, Image, StyleSheet, Button } from 'react-native';
+import { Modal, TextInput, View, TouchableHighlight, Image, StyleSheet, Button, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('screen')
+
 
 export default class SpotDetails extends Component {
   constructor(props) {
@@ -64,8 +67,8 @@ const styles = StyleSheet.create({
     marginBottom: 10
   }, 
 modal: {
-    width: 2,
-    height: 2
+    width: width * 0.5,
+    height: height * 0.5
 }
 
 })

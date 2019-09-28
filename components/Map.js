@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Modal, Dimensions} from 'react-native';
+import { SearchBar } from 'react-native-elements'
 import MapView from "react-native-maps";
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -16,7 +17,7 @@ export default class Map extends React.Component {
     super(props);
 
     this.state = {
-        isModalVisible: true,
+        isModalVisible: false,
         latitude: 0,
         longitude: 0,
         desLatitude: null,
@@ -52,11 +53,6 @@ export default class Map extends React.Component {
   //Get A Users Location!
   componentDidMount() {
       this._getLocationAsync();
-
-      this.setState({
-        desLatitude: 37,
-        desLongitude: -122
-      })
   }
 
   //Ask User for Current Location!
@@ -75,12 +71,13 @@ export default class Map extends React.Component {
   };
 
   handleOnPress = (marker) => {
-    this.setState({ desLatitude: marker.coordinates.latitude, desLongitude: marker.coordinates.longitude})
+    this.setState({ desLatitude: marker.coordinates.latitude, desLongitude: marker.coordinates.longitude, isModalVisible: true})
   }
 
   closeModal () {
     this.setState({isModalVisible: false})
   }
+
   
   render() {
     //Origin variable
@@ -101,8 +98,15 @@ export default class Map extends React.Component {
           }}
           showsUserLocation={true}
         >
-         <Header title={"Hello! Click Below to Find a Spot!"} />
-
+        <View style={{justifyContent: 'center'}}>
+        <SearchBar 
+            
+            containerStyle={{justifyContent: 'flex-end', width: 0, height: 0}}
+            inputStyle={{justifyContent: 'flex-end'}}
+            inputContainerStyle={{backgroundColor: 'white', width: width, justifyContent: 'center'}}
+            placeholder={'Search for your next spot...'}
+        />
+        </View>
          {(destination.latitude) ?  
          <MapViewDirections
             origin={origin}
@@ -124,19 +128,7 @@ export default class Map extends React.Component {
              />
            )
          })}
-        
 
-        <View 
-        style ={{
-          flex: 1,
-          width: width,
-          height: height * 0.25,
-          alignSelf: 'center',
-          position: 'absolute',
-          bottom: height * 0.01,
-          backgroundColor: 'white'
-        }}> 
-        </View>
         </MapView>
          <View style={styles.modal}>
           <SpotDetails isModalVisible={this.state.isModalVisible} closeModal={() => this.closeModal()}/>
