@@ -100,7 +100,7 @@ export default class Map extends React.Component {
         >
         <View style={{justifyContent: 'center'}}>
         <SearchBar 
-            
+            lightTheme
             containerStyle={{justifyContent: 'flex-end', width: 0, height: 0}}
             inputStyle={{justifyContent: 'flex-end'}}
             inputContainerStyle={{backgroundColor: 'white', width: width, justifyContent: 'center'}}
