@@ -4,7 +4,12 @@ import * as firebase from 'firebase';
 
 
 const randIdx =  Math.floor(Math.random() * 3)
-const defaultImages = [ 'alien.png', 'dog.png', 'jester.png', 'robot.png'];
+const defaultImages = [ 
+    'https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Alien-512.png',
+    'https://66.media.tumblr.com/15aa93b2b3b4949d6d061735c9ba6b21/tumblr_inline_n6y3qnRoSg1r73jj6.png',
+    'https://cdn.imgbin.com/0/10/15/imgbin-robot-scalable-graphics-euclidean-icon-robot-qDGV4CMnQsejEwaqGRvRiU1PH.jpg',
+    'https://cdn.dribbble.com/users/2101624/screenshots/6068793/dribbble5.jpg'
+]
 
 export default class SingUpScreem extends React.Component {
     constructor(props){
@@ -33,7 +38,7 @@ export default class SingUpScreem extends React.Component {
                 let user = firebase.auth().currentUser
                 user.updateProfile({
                     displayName: this.state.displayName,
-                    photoURL: (this.state.photoURL) ? this.state.photoURL : 'https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Alien-512.png'
+                    photoURL: (this.state.photoURL) ? this.state.photoURL : defaultImages[randIdx]
                 })
                 
             })
