@@ -18,7 +18,7 @@ export default class ProfileScreen extends React.Component {
       <View style={styles.userInfo}>
         <View style={styles.usercontainer}>
       <Image 
-          style={{width: 150, height: 150, borderColor: 'black', borderWidth: 3, borderRadius: 75, marginLeft: 125, paddingBottom: 5}}
+          style={{width: 150, height: 150, borderColor: 'black', borderWidth: 3, borderRadius: 75, alignSelf: 'center', paddingBottom: 5}}
           source={{uri: user.photoURL}}
           />
         <Text style={styles.displayName}>{user.displayName.toUpperCase()} </Text>
@@ -51,18 +51,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 5,
     fontSize: 20,
-    paddingLeft: 125,
-
+    alignSelf: 'center'
   },
   displayName: {
     fontWeight: 'bold',
-    marginLeft: 150,
+    alignSelf: 'center',
     paddingBottom: 5,
     fontSize: 20
   },
   email: {
     fontSize: 15,
-    marginLeft: 150,
+    alignSelf: 'center',
     color: 'gray'
   },
   spotContainer: {

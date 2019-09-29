@@ -8,6 +8,8 @@ import Header from './Header'
 const GOOGLE_MAPS_APIKEY = 'AIzaSyDVhP2V3nCDh2w1XpCLl4YoP5KmtKod7k0';
 import MapViewDirections from 'react-native-maps-directions';
 import SpotDetails from './SpotDetails'
+import { FirebaseWrapper } from '../firebase/firebase';
+
 
 const { width, height } = Dimensions.get('screen')
 
@@ -22,37 +24,40 @@ export default class Map extends React.Component {
         longitude: 0,
         desLatitude: null,
         desLongitude: null, 
-        markers: [{
-          id: 2,
-          title: 'hello',
-          coordinates: {
-            latitude: 40.730610,
-            longitude: -74.0060,
-          },
-        }, {
-          id: 5,
-          title: 'New Spot!',
-          coordinates: {
-            latitude: 37,
-            longitude: -122
-          }
-        }, {
-            id: 6,
-            title: 'Newer Spot!',
-            coordinates: {
-              latitude: 37.11,
-              longitude: -121
-            }
+        markers: []
+        
+        // markers: [{
+        //   id: 2,
+        //   title: 'hello',
+        //   coordinates: {
+        //     latitude: 40.730610,
+        //     longitude: -74.0060,
+        //   },
+        // }, {
+        //   id: 5,
+        //   title: 'New Spot!',
+        //   coordinates: {
+        //     latitude: 37,
+        //     longitude: -122
+        //   }
+        // }, {
+        //     id: 6,
+        //     title: 'Newer Spot!',
+        //     coordinates: {
+        //       latitude: 37.11,
+        //       longitude: -121
+        //     }
           
-        }]    
+        // }]    
     }
     this.handleOnPress = this.handleOnPress.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
 
   //Get A Users Location!
-  componentDidMount() {
+  async componentDidMount() {
       this._getLocationAsync();
+      await FirebaseWrapper.GetInstance().SetupCollectionListener('markers', (markers) => this.setState({markers: markers}))
   }
 
   //Ask User for Current Location!
@@ -67,11 +72,11 @@ export default class Map extends React.Component {
     //Set State to Current Location!
     let location = await Location.getCurrentPositionAsync({});
     this.setState({ latitude: location.coords.latitude, longitude: location.coords.longitude });
-    
+
   };
 
   handleOnPress = (marker) => {
-    this.setState({ desLatitude: marker.coordinates.latitude, desLongitude: marker.coordinates.longitude, isModalVisible: true})
+    this.setState({ desLatitude: marker.coordinates._lat, desLongitude: marker.coordinates._long, isModalVisible: true})
   }
 
   closeModal () {
@@ -83,6 +88,9 @@ export default class Map extends React.Component {
     //Origin variable
     const origin = {latitude: this.state.latitude, longitude: this.state.longitude};
     const destination = {latitude: this.state.desLatitude, longitude: this.state.desLongitude};
+
+    console.log('HERE IS STATE', this.state.markers)
+
 
       return (
         //Render MapVIew
@@ -119,9 +127,10 @@ export default class Map extends React.Component {
           }
 
          {this.state.markers.map(marker => {
+             console.log('HERE IS ONE MARKERRR FROM MAP', marker)
            return (
              <MapView.Marker 
-              key={marker.id}
+              key={marker.docid}
               coordinate={marker.coordinates}
               title={marker.titile}
               onPress={() => this.handleOnPress(marker)}
