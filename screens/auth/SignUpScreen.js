@@ -11,7 +11,7 @@ const defaultImages = [
     'https://cdn.dribbble.com/users/2101624/screenshots/6068793/dribbble5.jpg'
 ]
 
-export default class SingUpScreem extends React.Component {
+export default class SignUpScreen extends React.Component {
     constructor(props){
         super(props);
         this.state = { 

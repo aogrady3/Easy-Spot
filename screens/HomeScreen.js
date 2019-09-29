@@ -5,10 +5,10 @@ import Map from '../components/Map'
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   return (
     <View style={styles.container} >
-      <Map />
+      <Map navigation={props.navigation}/>
     </View>
    
   )

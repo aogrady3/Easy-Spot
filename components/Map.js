@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Modal, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Modal, Dimensions, TouchableOpacity, Image, Button} from 'react-native';
 import { SearchBar } from 'react-native-elements'
 import MapView from "react-native-maps";
 import * as Location from 'expo-location';
@@ -9,12 +9,13 @@ const GOOGLE_MAPS_APIKEY = 'AIzaSyDVhP2V3nCDh2w1XpCLl4YoP5KmtKod7k0';
 import MapViewDirections from 'react-native-maps-directions';
 import SpotDetails from './SpotDetails'
 import { FirebaseWrapper } from '../firebase/firebase';
+import { withNavigation } from 'react-navigation';
 
 
 const { width, height } = Dimensions.get('screen')
 
 
-export default class Map extends React.Component {
+class Map extends React.Component {
   constructor(props) {
     super(props);
 
@@ -106,6 +107,7 @@ export default class Map extends React.Component {
           }}
           showsUserLocation={true}
         >
+
         <View style={{justifyContent: 'center'}}>
         <SearchBar 
             lightTheme
@@ -114,6 +116,7 @@ export default class Map extends React.Component {
             inputContainerStyle={{backgroundColor: 'white', width: width, justifyContent: 'center'}}
             placeholder={'Search for your next spot...'}
         />
+
         </View>
          {(destination.latitude) ?  
          <MapViewDirections
@@ -137,8 +140,16 @@ export default class Map extends React.Component {
              />
            )
          })}
-
         </MapView>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('AddDriveway')}
+            style={styles.button} >
+            <Text style={styles.buttonText}>+</Text>
+          </TouchableOpacity>
+        </View>
+
          <View style={styles.modal}>
           <SpotDetails isModalVisible={this.state.isModalVisible} closeModal={() => this.closeModal()}/>
          </View>
@@ -147,6 +158,8 @@ export default class Map extends React.Component {
     }
   
     }
+
+    export default Map;
    
 
     const styles = StyleSheet.create({
@@ -170,5 +183,24 @@ export default class Map extends React.Component {
         width: 2,
         height: 2,
         marginTop: 10
-    }
+    }, 
+      button: {
+        width: 20,
+        flex: 1,
+        backgroundColor: 'white',
+        borderRadius: 25,
+        alignItems: 'center',
+      },
+      buttonContainer: {
+        flexDirection: 'row',
+        width: 50,
+        height: 50,
+        position: 'absolute',
+        bottom:10,
+        right:10,
+        justifyContent: 'center'
+      },
+      buttonText: {
+        fontSize: 50,
+      }
     });
