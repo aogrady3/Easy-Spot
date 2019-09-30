@@ -6,7 +6,8 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import * as firebase from 'firebase';
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyDVhP2V3nCDh2w1XpCLl4YoP5KmtKod7k0';
+import GOOGLE_MAPS_APIKEY from "../constants/googleApI"
+
 import MapViewDirections from 'react-native-maps-directions';
 import SpotDetails from './SpotDetails'
 import { FirebaseWrapper } from '../firebase/firebase';

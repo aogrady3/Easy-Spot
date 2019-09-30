@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, TextInput, Button, Modal, Alert, KeyboardAvoidingView} from 'react-native';
-const GOOGLE_APIKEY = 'AIzaSyDVhP2V3nCDh2w1XpCLl4YoP5KmtKod7k0';
+import GOOGLE_APIKEY  from "../constants/googleApI"
 import Geocoder from 'react-native-geocoding';
 import * as firebase from 'firebase';
 import { FirebaseWrapper } from '../firebase/firebase';
