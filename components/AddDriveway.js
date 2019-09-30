@@ -46,7 +46,7 @@ export default class AddDriveway extends React.Component {
                     description: this.state.description,
                     price: this.state.price,
                     coordinates: this.state.coordinates,
-                    photoUrl: this.state.photoUrl,
+                    photoUrl: this.state.photoUrl || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png",
                     userDisplayName: user.displayName,
                     userPhotoUrl: user.photoURL,
                     userEmail: user.email,
