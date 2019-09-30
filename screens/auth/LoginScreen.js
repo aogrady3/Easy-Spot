@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, TextInput, Button, Alert, Dimensions} from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Alert, Dimensions, ScrollView} from 'react-native';
 import * as firebase from 'firebase';
 
 const { width, height } = Dimensions.get('screen')
@@ -52,6 +52,7 @@ export default class LoginScreen extends React.Component {
                 <View style={styles.inputContainer}>
                 <TextInput style={styles.input}
                     value={this.state.password}
+                    secureTextEntry={true}
                     onChangeText={(text) => {this.setState({password: text})}}
                     placeholder={'Password...'}
                 />

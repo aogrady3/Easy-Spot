@@ -87,6 +87,7 @@ render () {
             <View style={styles.inputContainer}>
             <TextInput style={styles.input}
                 value={this.state.password}
+                secureTextEntry={true}
                 onChangeText={(text) => {this.setState({password: text})}}
                 placeholder={'Password...'}
             />
