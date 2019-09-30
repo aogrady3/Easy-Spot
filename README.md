@@ -4,7 +4,7 @@ React Native Mobile Application, which allows users to rent their personal drive
 
 ## :exclamation: Motivation
 
-Growing up in the Bronx I have always had trouble parking or finding available spots. Whether it looking for parking by the 6 train or visiting family I always noticed a lack of street parking but tons of empty driveways. After being confronted with this problem on countless occasions I created the mobile application Easy Spot, a mobile application that allows users to rent their personal driveways!
+Growing up in the Bronx I have always had trouble parking or finding available spots. Whether it be looking for parking by the 6 train or visiting family I always noticed a lack of street parking but tons of empty driveways. After being confronted with this problem on countless occasions I created the mobile application Easy Spot, a mobile application that allows users to rent their personal driveways!
 
 ## :car: Functionality
 
