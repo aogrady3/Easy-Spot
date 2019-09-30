@@ -35,4 +35,5 @@ Easy Spot’s back-end consist primarily of firebase path querying, and a collec
 ## :rocket: Demo
 
 Click below to watch a demo of Easy Spot!
+
 Link TBD
