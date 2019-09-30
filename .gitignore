@@ -9,5 +9,5 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
-constants/ApiKeys
-constants/googleApi
+/constants/ApiKeys
+/constants/googleApi
