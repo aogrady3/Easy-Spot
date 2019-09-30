@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, View, ScrollView, Image, StyleSheet, Button, Text } from 'react-native';
+import * as firebase from 'firebase'
 
 export default class SpotDetails extends Component {
   constructor(props) {
@@ -9,12 +10,10 @@ export default class SpotDetails extends Component {
     }
   }
 
-  confirmPurchase() {
-    // make call to Firebase
-  }
-
   render() {
       const selectedDriveway = this.props.selectedDriveway
+      let user = firebase.auth().currentUser
+
     return (
     <View styles={styles.modal}>
       <Modal
@@ -46,7 +45,8 @@ export default class SpotDetails extends Component {
                     <Text style={styles.subHeader}>{selectedDriveway.description}</Text>
                     <Text style={styles.subHeader}>{selectedDriveway.price}$ per/hour</Text>
             
-            <Button title="Confirm Purchase" onPress={() => this.confirmPurchase()}/>
+            {(selectedDriveway.userEmail === user.email) ? <View></View> : 
+            <Button title="Confirm Purchase" onPress={() => this.props.confirmPurchase(this.props.selectedDriveway)}/> }
             <Button title="Cancel" onPress={() => {this.props.closeModal()}} />
 
             </View>

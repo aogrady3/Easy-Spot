@@ -4,6 +4,7 @@ import { SearchBar } from 'react-native-elements'
 import MapView from "react-native-maps";
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import * as firebase from 'firebase';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyDVhP2V3nCDh2w1XpCLl4YoP5KmtKod7k0';
 import MapViewDirections from 'react-native-maps-directions';
@@ -32,6 +33,7 @@ class Map extends React.Component {
     this.handleOnPress = this.handleOnPress.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.closeDriveway = this.closeDriveway.bind(this)
+    this.confirmPurchase = this.confirmPurchase.bind(this)
   }
 
   //Get A Users Location!
@@ -58,7 +60,6 @@ class Map extends React.Component {
   handleOnPress = (marker) => {
     this.setState({ isModalVisible: true, selectedDriveway: marker})
 
-    // desLatitude: marker.coordinates.lat, desLongitude: marker.coordinates.lng, 
   }
 
   closeModal () {
@@ -69,11 +70,18 @@ class Map extends React.Component {
     this.setState({isAddDrivewayVisible: false})
   }
 
+  confirmPurchase(marker) {
+      this.setState({desLatitude: marker.coordinates.lat, desLongitude: marker.coordinates.lng, isModalVisible: false})
+
+  }
   
   render() {
     //Origin variable
     const origin = {latitude: this.state.latitude, longitude: this.state.longitude};
     const destination = {latitude: this.state.desLatitude, longitude: this.state.desLongitude};
+
+    //Needed for color assignment
+    let user = firebase.auth().currentUser
 
       return (
         //Render MapVIew
@@ -82,8 +90,8 @@ class Map extends React.Component {
           style={styles.map}
           provider="google"
           region = {{
-            longitudeDelta: 10,
-            latitudeDelta: 10,
+            longitudeDelta: 0.04,
+            latitudeDelta: 0.05,
             latitude: this.state.latitude,
             longitude: this.state.longitude
           }}
@@ -112,12 +120,17 @@ class Map extends React.Component {
           }
 
          {this.state.markers.map(marker => {
+            //process color
+            let color = "red"
+            if(user.email === marker.userEmail) color ="blue"
+
            return (
              <MapView.Marker 
               key={marker.docid}
               coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.lng}}
               title={marker.titile}
               onPress={() => this.handleOnPress(marker)}
+              pinColor={color}
              />
            )
          })}
@@ -135,6 +148,7 @@ class Map extends React.Component {
           <SpotDetails isModalVisible={this.state.isModalVisible} 
             closeModal={() => this.closeModal()} 
             selectedDriveway ={this.state.selectedDriveway}
+            confirmPurchase={this.confirmPurchase}
             />
          </View>
 
