@@ -4,12 +4,12 @@ import { SearchBar } from 'react-native-elements'
 import MapView from "react-native-maps";
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import Header from './Header'
+
 const GOOGLE_MAPS_APIKEY = 'AIzaSyDVhP2V3nCDh2w1XpCLl4YoP5KmtKod7k0';
 import MapViewDirections from 'react-native-maps-directions';
 import SpotDetails from './SpotDetails'
 import { FirebaseWrapper } from '../firebase/firebase';
-import { withNavigation } from 'react-navigation';
+import AddDriveway from './AddDriveway'
 
 
 const { width, height } = Dimensions.get('screen')
@@ -21,38 +21,17 @@ class Map extends React.Component {
 
     this.state = {
         isModalVisible: false,
+        isAddDrivewayVisible: false,
         latitude: 0,
         longitude: 0,
         desLatitude: null,
         desLongitude: null, 
+        selectedDriveway: {},
         markers: []
-        
-        // markers: [{
-        //   id: 2,
-        //   title: 'hello',
-        //   coordinates: {
-        //     latitude: 40.730610,
-        //     longitude: -74.0060,
-        //   },
-        // }, {
-        //   id: 5,
-        //   title: 'New Spot!',
-        //   coordinates: {
-        //     latitude: 37,
-        //     longitude: -122
-        //   }
-        // }, {
-        //     id: 6,
-        //     title: 'Newer Spot!',
-        //     coordinates: {
-        //       latitude: 37.11,
-        //       longitude: -121
-        //     }
-          
-        // }]    
     }
     this.handleOnPress = this.handleOnPress.bind(this)
     this.closeModal = this.closeModal.bind(this)
+    this.closeDriveway = this.closeDriveway.bind(this)
   }
 
   //Get A Users Location!
@@ -77,11 +56,17 @@ class Map extends React.Component {
   };
 
   handleOnPress = (marker) => {
-    this.setState({ desLatitude: marker.coordinates._lat, desLongitude: marker.coordinates._long, isModalVisible: true})
+    this.setState({ isModalVisible: true, selectedDriveway: marker})
+
+    // desLatitude: marker.coordinates.lat, desLongitude: marker.coordinates.lng, 
   }
 
   closeModal () {
     this.setState({isModalVisible: false})
+  }
+
+  closeDriveway () {
+    this.setState({isAddDrivewayVisible: false})
   }
 
   
@@ -89,9 +74,6 @@ class Map extends React.Component {
     //Origin variable
     const origin = {latitude: this.state.latitude, longitude: this.state.longitude};
     const destination = {latitude: this.state.desLatitude, longitude: this.state.desLongitude};
-
-    console.log('HERE IS STATE', this.state.markers)
-
 
       return (
         //Render MapVIew
@@ -130,11 +112,10 @@ class Map extends React.Component {
           }
 
          {this.state.markers.map(marker => {
-             console.log('HERE IS ONE MARKERRR FROM MAP', marker)
            return (
              <MapView.Marker 
               key={marker.docid}
-              coordinate={marker.coordinates}
+              coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.lng}}
               title={marker.titile}
               onPress={() => this.handleOnPress(marker)}
              />
@@ -144,16 +125,28 @@ class Map extends React.Component {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('AddDriveway')}
+            onPress={() => this.setState({isAddDrivewayVisible: true})}
             style={styles.button} >
             <Text style={styles.buttonText}>+</Text>
           </TouchableOpacity>
         </View>
 
          <View style={styles.modal}>
-          <SpotDetails isModalVisible={this.state.isModalVisible} closeModal={() => this.closeModal()}/>
+          <SpotDetails isModalVisible={this.state.isModalVisible} 
+            closeModal={() => this.closeModal()} 
+            selectedDriveway ={this.state.selectedDriveway}
+            />
          </View>
+
+         <View style={styles.modal}>
+          <AddDriveway isAddDrivewayVisible={this.state.isAddDrivewayVisible} 
+          closeDriveway={() => this.closeDriveway()}
+          />
+         </View>
+
         </View>
+
+        
     );
     }
   

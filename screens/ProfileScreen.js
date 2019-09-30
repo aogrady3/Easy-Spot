@@ -11,7 +11,6 @@ export default class ProfileScreen extends React.Component {
 
   render () {
     let user = firebase.auth().currentUser
-    console.log('HERE is USER', user)
 
   return (
     <ScrollView >

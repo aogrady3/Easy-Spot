@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, TextInput, View, TouchableHighlight, Image, StyleSheet, Button, Dimensions } from 'react-native';
-
-const { width, height } = Dimensions.get('screen')
-
+import { Modal, View, ScrollView, Image, StyleSheet, Button, Text } from 'react-native';
 
 export default class SpotDetails extends Component {
   constructor(props) {
@@ -12,12 +9,12 @@ export default class SpotDetails extends Component {
     }
   }
 
-  createPost() {
-    console.log('ayoooo', this.state.text)
+  confirmPurchase() {
     // make call to Firebase
   }
 
   render() {
+      const selectedDriveway = this.props.selectedDriveway
     return (
     <View styles={styles.modal}>
       <Modal
@@ -27,48 +24,75 @@ export default class SpotDetails extends Component {
         visible={this.props.isModalVisible}
       >
         <View style={{ marginTop: 25 }}>
-          <TouchableHighlight
-            onPress={() => {
-              this.props.closeModal()
-            }}>
-            <Image 
-              source={{ uri: 'https://cdn4.iconfinder.com/data/icons/media-controls-4/100/close-512.png' }} 
-              style={styles.close}
-            />
-          </TouchableHighlight>
-          
-          <TextInput
-            multiline={true}
-            numberOfLines={4}
-            onChangeText={(text) => this.setState({ text })}
-            placeholder="Tell your friends something here..."
-            value={this.state.text} 
-            style={styles.input}
-          />
+        <ScrollView >
+            <View style={styles.userInfo}>
+                <View style={styles.usercontainer}>
+                    <Image 
+                        style={{width: 150, height: 150, borderColor: 'black', borderWidth: 3, borderRadius: 75, alignSelf: 'center', paddingBottom: 5}}
+                        source={{uri: selectedDriveway.userPhotoUrl}}
+                        />
+                    <Text style={styles.header}>{selectedDriveway.userDisplayName} </Text>
+                    <Text style={styles.subHeader}>{selectedDriveway.userEmail}</Text>
+                </View>
+            </View>
+            <View style={styles.spotContainer}>
+            <Text style={styles.spotInfo}>Driveway Details</Text>
+                <Image 
+                        style={{width: 150, height: 150, borderColor: 'black', borderWidth: 1, alignSelf: 'center', paddingBottom: 5}}
+                        source={{uri: selectedDriveway.photoUrl}}
+                        />
+                    <Text style={styles.header}>{selectedDriveway.title} </Text>
+                    <Text style={styles.header}>{selectedDriveway.address} </Text>
+                    <Text style={styles.subHeader}>{selectedDriveway.description}</Text>
+                    <Text style={styles.subHeader}>{selectedDriveway.price}$ per/hour</Text>
+            
+            <Button title="Confirm Purchase" onPress={() => this.confirmPurchase()}/>
+            <Button title="Cancel" onPress={() => {this.props.closeModal()}} />
+
+            </View>
+        </ScrollView>
 
         </View>
 
-        <Button title="Create Post" onPress={() => this.createPost()}/>
+
       </Modal>
       </View>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  input: {
-    height: 80
-  },
-  close: {
-    width: 40,
-    height: 40,
-    alignSelf: 'flex-end',
-    marginRight: 10,
-    marginBottom: 10
-  }, 
-modal: {
-    width: width * 0.5,
-    height: height * 0.5
-}
 
-})
+const styles = StyleSheet.create({
+    userInfo: {
+      flex: 1,
+      height: 250,
+      backgroundColor: 'lightblue',
+      justifyContent: "center"
+      },
+      usercontainer: {
+        justifyContent: 'center'
+      },
+    spotInfo: {
+      fontWeight: 'bold',
+      paddingBottom: 5,
+      fontSize: 20,
+      alignSelf: 'center'
+    },
+    header: {
+      fontWeight: 'bold',
+      alignSelf: 'center',
+      paddingBottom: 5,
+      fontSize: 20
+    },
+    subHeader: {
+      fontSize: 15,
+      alignSelf: 'center',
+      color: 'gray'
+    },
+    spotContainer: {
+      flex: 1,
+      backgroundColor: 'lightgray',
+      height: 600
+    }
+  });
+  
