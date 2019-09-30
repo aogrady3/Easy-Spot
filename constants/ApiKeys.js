@@ -10,3 +10,4 @@ export default {
         measurementId: "G-NKDSRW6P2Y"
     }
 }
+

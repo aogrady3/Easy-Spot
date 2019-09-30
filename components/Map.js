@@ -212,3 +212,5 @@ class Map extends React.Component {
         fontSize: 50,
       }
     });
+
+    
