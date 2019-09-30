@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, TextInput, Button, Modal, Alert, Dimensions} from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Modal, Alert, KeyboardAvoidingView} from 'react-native';
 const GOOGLE_APIKEY = 'AIzaSyDVhP2V3nCDh2w1XpCLl4YoP5KmtKod7k0';
 import Geocoder from 'react-native-geocoding';
 import * as firebase from 'firebase';
@@ -67,7 +67,10 @@ export default class AddDriveway extends React.Component {
             transparent={false}
             visible={this.props.isAddDrivewayVisible}
             >
-
+                
+            <KeyboardAvoidingView 
+            style={styles.container}
+            behavior='padding' >
             <View style={styles.container}>
                 <Text style={styles.text}>Please Provide Driveway Information</Text>
                 <View style={styles.inputContainer}>
@@ -124,6 +127,7 @@ export default class AddDriveway extends React.Component {
                 <Button title='Cancel' onPress={this.onCancel} />
 
             </View>
+            </KeyboardAvoidingView>
         </Modal>
         )
     }

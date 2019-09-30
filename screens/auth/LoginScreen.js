@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, TextInput, Button, Alert, Dimensions, ScrollView} from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Alert, Dimensions, KeyboardAvoidingView} from 'react-native';
 import * as firebase from 'firebase';
 
 const { width, height } = Dimensions.get('screen')
@@ -38,6 +38,9 @@ export default class LoginScreen extends React.Component {
 
     render () {
         return (
+            <KeyboardAvoidingView
+            style={styles.container}
+            behavior='padding' >
             <View style={styles.container}>
                 <Text style={styles.text}>Welcome to Easy Spot</Text>
                 <View style={styles.inputContainer}>
@@ -62,6 +65,7 @@ export default class LoginScreen extends React.Component {
 
                 <Button title="Sign Up" onPress={this.onSignUpPress} />
             </View>
+            </KeyboardAvoidingView>
         )
     }
 }

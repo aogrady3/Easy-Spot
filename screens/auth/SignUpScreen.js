@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, TextInput, Button, Alert, } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Alert, KeyboardAvoidingView } from 'react-native';
 import * as firebase from 'firebase';
 
 
@@ -54,6 +54,9 @@ render () {
     console.log(this.state)
 
     return (
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior='padding' >
         <View style={styles.container}>
             <Text style={styles.text}>Create an Account!</Text>
 
@@ -97,6 +100,7 @@ render () {
 
             <Button title="Sign Up" onPress={this.onSignUpPress} />
         </View>
+        </KeyboardAvoidingView>
     )
 }
 }
